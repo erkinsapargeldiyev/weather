@@ -1,14 +1,17 @@
 part of 'weather_bloc.dart';
 
 abstract class WeatherEvent extends Equatable {
+  const WeatherEvent();
+
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class FetchWeather extends WeatherEvent {
   final Position position;
-  FetchWeather(this.position);
+
+  const FetchWeather(this.position);
 
   @override
-  List<Object> get props => [position];
+  List<Object?> get props => [position];
 }
