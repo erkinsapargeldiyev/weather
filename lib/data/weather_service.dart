@@ -3,11 +3,13 @@ import 'package:weatherapp/data/data.dart'; // API_KEY bu ýerde saklanýar
 import 'package:weatherapp/model/forecast.dart';
 
 class WeatherService {
-  static Future<List<ForecastItem>> fetchForecast(
-    double lat,
-    double lon,
-  ) async {
-    final dio = Dio();
+  static Future<Forecast> fetchForecast(double lat, double lon) async {
+    final dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 10),
+      ),
+    );
 
     try {
       final response = await dio.get(
@@ -21,24 +23,31 @@ class WeatherService {
         },
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
+        final forecast = Forecast.fromJson(response.data);
+
+        // Debug üçin görkezmek
+        print('Şäher: ${forecast.city.name}');
+        for (var item in forecast.list) {
+          print('⏰ Sene: ${item.dtTxt}');
+          print('🌡️ Temp: ${item.main.temp}°C');
+          print('☁️ Howa: ${item.weather.first.description}');
+          print('💨 Şemal: ${item.wind.speed} m/s');
+          print('------------------------');
+        }
+
+        print('<<<<<<<<<<<<<<<<<<<<<${forecast.message}');
+        print('<<<<<<<<<<<<<<<<<<<<<${forecast.code}');
+
+        return forecast;
+      } else {
         throw Exception('Sorag şowsuz: ${response.statusCode}');
       }
-
-      final forecast = Forecast.fromJson(response.data);
-
-      // Debug üçin çap etmek (islege bagly)
-      for (var item in forecast.list) {
-        print('Sene: ${item.dtTxt}');
-        print('Temperatura: ${item.main.temp}°C');
-        print('Howa: ${item.weather.first.description}');
-        print('Şemal: ${item.wind.speed} m/s');
-        print('----------------------');
-      }
-
-      return forecast.list;
+    } on DioException catch (e) {
+      print('DioException (baglanyşyk ýalňyşlygy): ${e.message}');
+      throw Exception('API bilen baglanyşyk edip bolmady: ${e.message}');
     } catch (e) {
-      print('WeatherService fetch error: $e');
+      print('Beýlekiler: $e');
       throw Exception('Maglumat almak mümkün bolmady: $e');
     }
   }

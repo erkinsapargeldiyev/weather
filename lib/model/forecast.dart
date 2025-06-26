@@ -1,9 +1,11 @@
 class Forecast {
-  final String code;
-  final int message;
-  final int cnt;
-  final List<ForecastItem> list;
-  final City city;
+  final String code; // Status kody (meselem, "200" gowy netijäni aňladýar)
+  final int
+  message; // Serwerden gelen goşmaça maglumat ýa-da kod (köplenç ulanylmaýar)
+  final int cnt; // Prognosda görkezilen elementleriň sany (nesil sany)
+  final List<ForecastItem>
+  list; // Prognos sanawy — wagt boýunça üýtgeýän howa maglumatlary
+  final City city; // Şäher barada maglumatlar
 
   Forecast({
     required this.code,
@@ -26,15 +28,18 @@ class Forecast {
 }
 
 class ForecastItem {
-  final int dt;
-  final MainInfo main;
-  final List<Weather> weather;
-  final Clouds clouds;
-  final Wind wind;
-  final int visibility;
-  final double pop;
-  final Sys sys;
-  final String dtTxt;
+  final int dt; // UNIX wagty (sekundlarda, 1970-den başlap)
+  final MainInfo main; // Esasy temperatura we atmosfera maglumatlary
+  final List<Weather>
+  weather; // Howanyň görnüşi (bölüm, ýagyn, ýagyrmaka we ş.m.)
+  final Clouds clouds; // Bulutlylyk derejesi (% görnüşde)
+  final Wind wind; // Şemal tizlik we ugry
+  final int visibility; // Görnüşlik (metrlerde)
+  final double
+  pop; // Ýagyş ähtimallygy (probability of precipitation), 0.0-den 1.0 çenli
+  final Sys sys; // Wagt bölümi (gündiz/gije)
+  final String
+  dtTxt; // Senäniň tekst görnüşindäki görnüşi (meselem "2025-06-27 15:00:00")
 
   ForecastItem({
     required this.dt,
@@ -63,30 +68,31 @@ class ForecastItem {
     );
   }
 
-  DateTime get dateTime => DateTime.parse(dtTxt);
+  DateTime get dateTime =>
+      DateTime.parse(dtTxt); // dtTxt-den DateTime obýekti döreýär
 }
 
 class MainInfo {
-  final double temp;
-  final double feelsLike;
-  final double tempMin;
-  final double tempMax;
-  final int pressure;
-  final int seaLevel;
-  final int grndLevel;
-  final int humidity;
-  final double tempKf;
+  final double temp; // Asyl temperatura (°C)
+  final double feelsLike; // Duýulýan temperatura (temperatura duýgusy)
+  final double tempMin; // Minimum temperatura (°C)
+  final double tempMax; // Maksimum temperatura (°C)
+  final int pressure; // Atmosfera basyşy (hPa)
+  final int seaLevel; // Deňiz derejesindäki basyş (hPa)
+  final int grndLevel; // Ýer ýüzüniň derejesindäki basyş (hPa)
+  final int humidity; // Çyglylyk (% görnüşde)
+  final double tempKf; // Temperatura korreksiýasy (köplenç 0.0 bolup durýar)
 
   MainInfo({
     required this.temp,
-    required this.feelsLike, //temperatura
-    required this.tempMin, //temperatura  max
-    required this.tempMax, //temperatura  min
-    required this.pressure, // Atmosfera basysy
-    required this.seaLevel, // Deniz derejesindaki basys
-    required this.grndLevel, // Deniz derejisnaki basys
-    required this.humidity, //cyglylyk
-    required this.tempKf, //Temperatura korreksiýasy
+    required this.feelsLike,
+    required this.tempMin,
+    required this.tempMax,
+    required this.pressure,
+    required this.seaLevel,
+    required this.grndLevel,
+    required this.humidity,
+    required this.tempKf,
   });
 
   factory MainInfo.fromJson(Map<String, dynamic> json) {
@@ -105,10 +111,10 @@ class MainInfo {
 }
 
 class Weather {
-  final int id;
-  final String main;
-  final String description;
-  final String icon;
+  final int id; // Howanyň kody (OpenWeatherMap kody)
+  final String main; // Howanyň esasy görnüşi (meselem, "Rain", "Clear")
+  final String description; // Howanyň doly düşündiriş (meselem, "light rain")
+  final String icon; // Ikonka kody (grafiki alamatlar üçin)
 
   Weather({
     required this.id,
@@ -128,7 +134,7 @@ class Weather {
 }
 
 class Clouds {
-  final int all; // gok yuzi nace goterim bulut
+  final int all; // Bulutlylygyň göterimi (% görnüşde)
 
   Clouds({required this.all});
 
@@ -138,9 +144,9 @@ class Clouds {
 }
 
 class Wind {
-  final double speed; //semal ugry
-  final int deg; //semal tizligi
-  final double gust; // Semalym dowumi
+  final double speed; // Şemal tizligi (m/s)
+  final int deg; // Şemalyň ugrunyň burçy (derejede)
+  final double gust; // Şemalym dowumy (m/s)
 
   Wind({required this.speed, required this.deg, required this.gust});
 
@@ -154,7 +160,7 @@ class Wind {
 }
 
 class Sys {
-  final String pod; // Gunin wagt bolgi
+  final String pod; // Güniň wagt bölegi ("d" - gündiz, "n" - gije)
 
   Sys({required this.pod});
 
@@ -164,14 +170,14 @@ class Sys {
 }
 
 class City {
-  final int id;
-  final String name;
-  final Coord coord;
-  final String country;
-  final int population;
-  final int timezone;
-  final int sunrise;
-  final int sunset;
+  final int id; // Şäheriň unikal ID belgisi
+  final String name; // Şäheriň ady
+  final Coord coord; // Şäheriň koordinatlary (lat, lon)
+  final String country; // Ýurt belgisi (meselem "TM" Türkmenistan)
+  final int population; // Adam sany (şäheriň ilaty)
+  final int timezone; // UTC-den wagt zony tapawudy (sekundlarda)
+  final int sunrise; // Gün çykýan wagty (UNIX sekundlarda, UTC)
+  final int sunset; // Gün batan wagty (UNIX sekundlarda, UTC)
 
   City({
     required this.id,
@@ -199,8 +205,8 @@ class City {
 }
 
 class Coord {
-  final double lat;
-  final double lon;
+  final double lat; // Kengişlik (Latýtuda) koordinaty
+  final double lon; // Uzynlyk (Longýtuda) koordinaty
 
   Coord({required this.lat, required this.lon});
 

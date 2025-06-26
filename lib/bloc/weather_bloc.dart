@@ -19,7 +19,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       final forecastList = await WeatherService.fetchForecast(
         event.position.latitude,
         event.position.longitude,
-        // location goşulýar
       );
 
       emit(WeatherLoaded(forecastList));
