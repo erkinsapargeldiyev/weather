@@ -11,14 +11,14 @@ class RowCustom extends StatelessWidget {
   String time2;
 
   RowCustom({
-    Key? key,
+    super.key,
     required this.imageAdress,
     required this.day,
     required this.time,
     required this.imageAdress2,
     required this.day2,
     required this.time2,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

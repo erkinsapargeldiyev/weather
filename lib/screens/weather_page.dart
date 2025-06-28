@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:weatherapp/bloc/weather_bloc.dart';
+import 'package:weatherapp/bloc/weather_bloc/weather_bloc.dart';
 import 'package:weatherapp/model/forecast.dart';
-import 'package:weatherapp/screens/home_page.dart';
+import 'package:weatherapp/screens/locatoar_search.dart';
 
 class WeatherPage extends StatelessWidget {
   final String location;
@@ -59,7 +59,7 @@ class WeatherPage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
-          'Duran ýeriňiz: ${location}',
+          'Duran ýeriňiz: $location',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -257,7 +257,7 @@ class WeatherPage extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '👁️ Görnüş aralygy: ${item.visibility / 1000} km',
+                                                      '👁️ Görüş aralygy: ${item.visibility / 1000} km',
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                       ),
@@ -337,7 +337,7 @@ class WeatherPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Internet baglanyşygy ýok',
+                          state.errorMessage,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -349,7 +349,7 @@ class WeatherPage extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => LocatoarSearch(),
                               ),
                             );
                           },

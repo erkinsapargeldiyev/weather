@@ -24,7 +24,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       emit(WeatherLoaded(forecastList));
     } catch (e) {
       print('Bloc error: $e');
-      emit(WeatherError());
+      emit(WeatherError(errorMessage: 'Ýalňyşlyk: $e'));
     }
   }
 }

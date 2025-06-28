@@ -3,7 +3,7 @@ import 'package:weatherapp/data/data.dart'; // API_KEY bu ýerde saklanýar
 import 'package:weatherapp/model/forecast.dart';
 
 class WeatherService {
-  static Future<Forecast> fetchForecast(double lat, double lon) async {
+  static Future fetchForecast(double lat, double lon) async {
     final dio = Dio(
       BaseOptions(
         connectTimeout: const Duration(seconds: 10),
@@ -19,36 +19,27 @@ class WeatherService {
           'lon': lon,
           'appid': API_KEY,
           'units': 'metric',
-          'lang': 'tm',
         },
       );
+      final forecast = Forecast.fromJson(response.data);
 
       if (response.statusCode == 200) {
-        final forecast = Forecast.fromJson(response.data);
-
         // Debug üçin görkezmek
         print('Şäher: ${forecast.city.name}');
         for (var item in forecast.list) {
-          print('⏰ Sene: ${item.dtTxt}');
-          print('🌡️ Temp: ${item.main.temp}°C');
-          print('☁️ Howa: ${item.weather.first.description}');
-          print('💨 Şemal: ${item.wind.speed} m/s');
-          print('------------------------');
+          print('🌡️ Tempture: ${item.main.temp}°C');
         }
 
-        print('<<<<<<<<<<<<<<<<<<<<<${forecast.message}');
-        print('<<<<<<<<<<<<<<<<<<<<<${forecast.code}');
+        print('<<<<<<<<<<<<<<<<<<<<< Forecast code:${forecast.code}');
 
         return forecast;
       } else {
-        throw Exception('Sorag şowsuz: ${response.statusCode}');
+        print('<<<<<<<<<<<<<<<<<<<<<<<<<<Message:${forecast.message}');
+        return forecast.message;
       }
     } on DioException catch (e) {
-      print('DioException (baglanyşyk ýalňyşlygy): ${e.message}');
-      throw Exception('API bilen baglanyşyk edip bolmady: ${e.message}');
-    } catch (e) {
-      print('Beýlekiler: $e');
-      throw Exception('Maglumat almak mümkün bolmady: $e');
+      print('DioException: ${e.message}');
+      throw 'Maglumat alyp bolmady';
     }
   }
 }

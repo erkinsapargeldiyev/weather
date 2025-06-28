@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:weatherapp/screens/home_page.dart';
+import 'package:weatherapp/screens/locatoar_search.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,6 +11,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LocatoarSearch(),
+    );
   }
 }
